@@ -8,7 +8,7 @@ size = (800, 600)
 #képernyőméret
 ablak = pygame.display.set_mode(size)
 #képernyőméret megjelenítése
-pygame.display.set_caption('Chrome Dino 0.4.1 Beta')
+pygame.display.set_caption('Chrome Dino 0.5.0 Beta')
 #fejléc
 
 kek = (0,0,255)
@@ -27,6 +27,7 @@ valtozas=0
 fps=random.randint(59.0,61.0)
 pont=0
 pont2=0
+legjobb_pont=0
 gyorsasag=(-10)
 felhox=500
 felhox2=150
@@ -35,7 +36,7 @@ game_over=False
 jump=True
 Gameover="Game Over"
 #változók
-basic_font = pygame.font.Font('freesansbold.ttf', 25)
+basic_font = pygame.font.SysFont('Times New Roman', 25)
 #betűtípus
 jump_hang=pygame.mixer.Sound("jump.mp3")
 over=pygame.mixer.Sound("ovr.mp3")
@@ -75,6 +76,7 @@ while not vege:
                 retryy=-100
                 retryx=-100
                 gyorsasag=-10
+
     #pygame eventek
     if game_over==False:
         dinoy+=valtozas
@@ -89,11 +91,13 @@ while not vege:
             kaktusx=780
             pont+=1
             pont2+=1
-        if dinox in range (kaktusx-55,kaktusx) and dinoy in range(kaktusy-60,kaktusy):
+        if dinox in range (kaktusx-50,kaktusx) and dinoy in range(kaktusy-60,kaktusy):
             game_over=True
             retryx=400
             retryy=300
             pygame.mixer.Sound.play(over)
+            if pont2 > legjobb_pont:
+                legjobb_pont = pont2
         if felhox<-220:
             felhox=800
         if felhox2<-220:
@@ -106,10 +110,12 @@ while not vege:
     if pont%10==0:
         pont=1
         gyorsasag-=1
+
     #Feltételek
     pontok = basic_font.render(f'Score: {pont2}', False, szurke)
     GameOver= basic_font.render(f'{Gameover}', False, szurke)
     fpskep= basic_font.render(f'FPS: {(fps):.1f}', False, szurke)
+    legjobb = basic_font.render(f'Best Score: {(legjobb_pont)}', False, szurke)
     #Szöveges változók
     ablak.fill(feher)
     ablak.blit(dino, (dinox, dinoy))
@@ -121,6 +127,7 @@ while not vege:
     ablak.blit(felho2, (felhox2, 100))
     ablak.blit(felho3, (felho3x, 100))
     ablak.blit(lacithelaci, (100, 450))
+    ablak.blit(legjobb,(30,60))
     pygame.draw.rect(ablak, fekete, (0, 365, 1000, 1))
     button1 = pygame.draw.rect(ablak, fekete, (retryx, retryy, 42, 35))
     ablak.blit(retry, (retryx, retryy))
@@ -128,3 +135,4 @@ while not vege:
     pygame.display.flip()
     clock.tick(fps)
     #FPS korlátozás
+    
