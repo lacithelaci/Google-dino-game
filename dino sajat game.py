@@ -8,7 +8,7 @@ size = (800, 600)
 #képernyőméret
 ablak = pygame.display.set_mode(size)
 #képernyőméret megjelenítése
-pygame.display.set_caption('Chrome Dino 0.5.0 Beta')
+pygame.display.set_caption('Chrome Dino 1.0.0')
 #fejléc
 
 kek = (0,0,255)
@@ -32,7 +32,9 @@ gyorsasag=(-10)
 felhox=500
 felhox2=150
 felho3x=850
-game_over=False
+playx=400
+playy=300
+game_over=True
 jump=True
 Gameover="Game Over"
 #változók
@@ -50,6 +52,7 @@ felho=pygame.image.load('felho.PNG')
 felho2=pygame.image.load('felho.PNG')
 felho3=pygame.image.load('felho.PNG')
 lacithelaci=pygame.image.load('lacithelaci.PNG')
+play=pygame.image.load('play.PNG')
 #képek beolvasása
 clock = pygame.time.Clock()
 vege = False
@@ -58,7 +61,9 @@ while not vege:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             vege = True
-            xd=0
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_q:
+                vege=True
         if jump:
                 if event.type == pygame.KEYUP:
                     if event.key == pygame.K_SPACE:
@@ -76,7 +81,11 @@ while not vege:
                 retryy=-100
                 retryx=-100
                 gyorsasag=-10
-
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            mx, my = pygame.mouse.get_pos()
+            if playbutton.collidepoint((mx, my)):
+                game_over=False
+                playy=-1000
     #pygame eventek
     if game_over==False:
         dinoy+=valtozas
@@ -129,10 +138,11 @@ while not vege:
     ablak.blit(lacithelaci, (100, 450))
     ablak.blit(legjobb,(30,60))
     pygame.draw.rect(ablak, fekete, (0, 365, 1000, 1))
+    playbutton=pygame.draw.rect(ablak, fekete, (playx+6, playy+6, 30, 30))
+    ablak.blit(play,(playx,playy))
     button1 = pygame.draw.rect(ablak, fekete, (retryx, retryy, 42, 35))
     ablak.blit(retry, (retryx, retryy))
     #Változók megjelenítése
     pygame.display.flip()
     clock.tick(fps)
     #FPS korlátozás
-    
