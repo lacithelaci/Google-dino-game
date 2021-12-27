@@ -8,7 +8,7 @@ size = (800, 600)
 #képernyőméret
 ablak = pygame.display.set_mode(size)
 #képernyőméret megjelenítése
-pygame.display.set_caption('Chrome Dino 1.0.0')
+pygame.display.set_caption('Chrome Dino 1.1.0.')
 #fejléc
 
 kek = (0,0,255)
@@ -24,7 +24,7 @@ kaktusy=315
 retryx=-100
 retryy=-100
 valtozas=0
-fps=random.randint(59.0,61.0)
+fps=random.randint(30.0,120.0)
 pont=0
 pont2=0
 legjobb_pont=0
@@ -42,6 +42,7 @@ basic_font = pygame.font.SysFont('Times New Roman', 25)
 #betűtípus
 jump_hang=pygame.mixer.Sound("jump.mp3")
 over=pygame.mixer.Sound("ovr.mp3")
+pygame.joystick.init()
 #hangok
 
 
@@ -70,6 +71,11 @@ while not vege:
                         valtozas=-10
                         jump=False
                         pygame.mixer.Sound.play(jump_hang)
+                if event.type == pygame.JOYBUTTONDOWN:
+                    if event.button == 0:
+                        valtozas = -10
+                        jump = False
+                        pygame.mixer.Sound.play(jump_hang)
         if event.type == pygame.MOUSEBUTTONDOWN:
             mx, my = pygame.mouse.get_pos()
             if button1.collidepoint((mx, my)):
@@ -86,6 +92,7 @@ while not vege:
             if playbutton.collidepoint((mx, my)):
                 game_over=False
                 playy=-1000
+
     #pygame eventek
     if game_over==False:
         dinoy+=valtozas
@@ -119,6 +126,11 @@ while not vege:
     if pont%10==0:
         pont=1
         gyorsasag-=1
+    joystick_count = pygame.joystick.get_count()
+    for i in range(joystick_count):
+        joystick = pygame.joystick.Joystick(i)
+        joystick.init()
+    hats = joystick.get_numhats()
 
     #Feltételek
     pontok = basic_font.render(f'Score: {pont2}', False, szurke)
