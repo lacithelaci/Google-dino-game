@@ -8,7 +8,7 @@ size = (800, 600)
 #képernyőméret
 ablak = pygame.display.set_mode(size)
 #képernyőméret megjelenítése
-pygame.display.set_caption('Chrome Dino 1.1.0.')
+pygame.display.set_caption('Chrome Dino 1.2.0.')
 #fejléc
 
 kek = (0,0,255)
@@ -66,7 +66,7 @@ while not vege:
             if event.key == pygame.K_q:
                 vege=True
         if jump:
-                if event.type == pygame.KEYUP:
+                if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE:
                         valtozas=-10
                         jump=False
@@ -130,7 +130,7 @@ while not vege:
     for i in range(joystick_count):
         joystick = pygame.joystick.Joystick(i)
         joystick.init()
-    hats = joystick.get_numhats()
+
 
     #Feltételek
     pontok = basic_font.render(f'Score: {pont2}', False, szurke)
