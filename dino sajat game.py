@@ -40,8 +40,8 @@ Gameover="Game Over"
 #változók
 basic_font = pygame.font.SysFont('Times New Roman', 25)
 #betűtípus
-jump_hang=pygame.mixer.Sound("jump.mp3")
-over=pygame.mixer.Sound("ovr.mp3")
+jump_hang=pygame.mixer.Sound("jump.wav")
+over=pygame.mixer.Sound("ovr.wav")
 pygame.joystick.init()
 #hangok
 
